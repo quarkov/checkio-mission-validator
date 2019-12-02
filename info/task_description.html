@@ -1,0 +1,118 @@
+<p align="justify">
+    This mission was inspired by <a href="https://twitter.com/raymondh" target="_blank" title="twitter Рэймонда">Raymond Hettinger's</a>
+    talk at the 4th annual <a href="https://pybay.com/" target="_blank" title="PyBay website">PyBay</a> conference.
+    <br>
+    This is the second mission related to his talk.
+    The first mission can be seen by clicking <a href="https://py.checkio.org/en/mission/tree-walker/" target="_blank" title="TreeWalker">here</a>.
+</p>
+<p align="justify">
+    Data validation is a check process that confirms that type and value of the input (in our case) data matches the specification.
+    In the mission, you need to create <b>LogLine</b> class which uses input data passing as an argument for its instances initialization.
+    The class should have the next attributes: <b>id</b>, <b>name</b>, <b>status</b> and <b>error</b>. In order to retrieve the attribute values the <b>get()</b> method should be implemented.
+    When initializing a class instance, it is required to validate the data, which must meet the following requirements:
+    <br>
+        <ul>
+            <li>input data type - string;</li>
+            <li>input string contains "id", "name" and "status" (in the certain order), separated by whitespaces, not less, not more;</li>
+            <li><b>id</b> value should allow its conversion to an int, 0 <= id <= 1000;</li>
+            <li>len(<b>name</b>) should be not less than 2, not more than 20, any characters, except whitespace;</li>
+            <li><b>status</b> should one of ["active", "idle", "shutdown"].</li>
+        </ul>
+</p>
+
+<p align="justify">
+    If the data type and value are successfully validated during a class instance initialization, its attributes <b>id</b>, <b>name</b> и <b>status</b> should have respective values.
+    The value of the <b>error</b> attr should be "passed data is valid".
+</p>
+
+<div class="for_info_only">
+    <p>
+        <strong>Example of the class instance initiated with the valid data:</strong>
+    </p>
+
+    <pre class="brush: python">
+        log = LogLine("123 search active")
+        log.get("error") == "passed data is valid"
+        log.get("id") == 123
+        log.get("name") == "search"
+        log.get("status") == "active"
+    </pre>
+</div>
+
+<p align="justify">
+    If data type or value do not pass validation during a class instance initialization, its attributes <b>id</b>, <b>name</b> и <b>status</b> values should be None.
+    The value of the <b>error</b> attribute may be:
+    <br>
+        <ul>
+            <li>the input data is not an instance of a string - <b>"wrong input type"</b>;</li>
+            <li>in the passed string more or less than 3 space-separated elements - <b>"wrong input value"</b>;</li>
+            <li>the first element of the passed string (<b>id</b>) cannot be converted to an integer - <b>"wrong id type"</b>;</li>
+            <li> 0 > <b>id</b> or <b>id</b> > 1000 - <b>"wrong id value"</b>;</li>
+            <li>length of the <b>name</b> is less than 2 or more than 20 - <b>"wrong name value"</b>;</li>
+            <li><b>status</b> isn't one of ["active", "idle", "shutdown"] - <b>"wrong status value"</b>;</li>
+        </ul>
+    The order in which the possible values of the error attribute are listed corresponds to the order in which the data should be validated.
+    It is not necessary to record all validation errors - if any error occurs, validation can be interrupted and the passed data can be considered invalid.
+    If you want to track all the errors in the passed data when solving a task for some reason, the <i>log.get("error")</i> method should return a message for the first error found.
+</p>
+
+<div class="for_info_only">
+    <p>
+        <strong>Examples of the class instances initiated with the invalid data:</strong>
+    </p>
+
+    <pre class="brush: python">
+        log1 = LogLine("123 k passive")
+        log1.get("error") == "wrong name value"
+        log1.get("id") == None
+        log1.get("name") == None
+        log1.get("status") == None
+
+        log2 = LogLine(["1001 search active"])
+        log2.get("error") == "wrong input type"
+
+        log3 = LogLine("1001 search passive")
+        log3.get("error") == "wrong id value"
+
+        log4 = LogLine("900 search passive")
+        log4.get("error") == "wrong status value"
+
+        log5 = LogLine("900 search active something")
+        log5.get("error") == "wrong input value"
+    </pre>
+</div>
+
+<p align="justify">
+    Although the task of validating data does not necessarily require the using of classes, in this mission their usage is
+    encouraged for educational purposes.  Also, we can compare our data validation approach with how Raymond does it in this
+    part of the <a href="https://youtu.be/UANN2Eu6ZnM?t=2157" target="_blank" title="youtube video">video</a>, where he
+    tells about the proper classes writing strategy (with inheritance) on the example of the Validator class.
+</p>
+
+<p>
+    <strong>Input: </strong> arbitrary of any type.
+    <ul>
+    <li>valid type of the input - str;</li>
+    <li>input str must contain 3 parameters separated by whitespaces;</li>
+    <li>the first parameter is <b>id</b>, should allow its conversion to an int, 0 <= id <= 1000;</li>
+    <li>the second parameter is <b>name</b>, any characters (except whitespaces), 2 <= len(name) <= 20;</li>
+    <li>the third parameter is <b>status</b>, any of ["active", "idle", "shutdown"].</li>
+    </ul>
+</p>
+
+<p>
+    <strong>Output: </strong>a list of an instance attributes <b>id</b>, <b>name</b>, <b>status</b> and <b>error</b> in the exact order.
+</p>
+
+<div class="for_info_only">
+    <p>
+        <strong>Examples:</strong>
+    </p>
+
+    <pre class="brush: python">
+validate(LogLine("123 k passive")) == [None, None, None, "wrong name value"]                        #example #1
+validate(LogLine("123 search active")) == [123, "search", "active", "passed data is valid"]         #example #2
+validate(LogLine("1001 search active")) == [None, None, None, "wrong id value"]                     #example #3
+    </pre>
+</div>
+

@@ -1,0 +1,26 @@
+allowed_statuses = ["active", "idle", "shutdown"]
+
+
+class LogLine:
+    pass
+
+
+def validate(log):
+    """
+        :type log: LogLine(data)
+    """
+    return [log.get("id"), log.get("name"), log.get("status"), log.get("error")]
+
+if __name__ == '__main__':
+    #These "asserts" using only for self-checking and not necessary for auto-testing
+
+    assert validate(LogLine("123 k passive")) == [None, None, None, "wrong name value"]
+    assert validate(LogLine("123 search active")) == [123, "search", "active", "passed data is valid"]
+    assert validate(LogLine("1001 search active")) == [None, None, None, "wrong id value"]
+    assert validate(LogLine(["1001 search active"])) == [None, None, None, "wrong input type"]
+    assert validate(LogLine("900 search passive")) == [None, None, None, "wrong status value"]
+    assert validate(LogLine("900 search passive something")) == [None, None, None, "wrong input value"]
+    assert validate(LogLine("0111 transfer active")) == [111, "transfer", "active", "passed data is valid"]
+    assert validate(LogLine(set("0111 transfer active"))) == [None, None, None, "wrong input type"]
+
+    print("Coding complete? Let's try tests!")

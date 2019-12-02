@@ -1,0 +1,119 @@
+<p align="justify">
+    Эта миссия создана под впечатлением от выступления <a href="https://twitter.com/raymondh" target="_blank" title="twitter Рэймонда">Рэймонда Хеттингера</a>
+    на 4-ой ежегодной конференции <a href="https://pybay.com/" target="_blank" title="PyBay website">PyBay</a>.
+    <br>
+    Это уже вторая миссия, связанная с данным выступлением.
+    Посмотреть первую можно по этой <a href="https://py.checkio.org/en/mission/tree-walker/" target="_blank" title="TreeWalker">ссылке</a>.
+    <br>
+    Валидация данных - это проверка того, что тип и значение входных (в нашем случае) данных соответствуют спецификации.
+    В миссии нужно написать класс <b>LogLine</b>, используя для инициализации какие-то входные данные.
+    У класса должны быть следующие атрибуты: <b>id</b>, <b>name</b>, <b>status</b> и <b>error</b>. Для того, чтобы получить значения этих атрибутов, в классе должен быть написан метод <b>get()</b>.
+    При инициализации экземпляра класса требуется валидировать передаваемые данные, которые должны удовлетворять следующим требованиям:
+    <br>
+        <ul>
+            <li>тип передаваемых данных - строка;</li>
+            <li>строка должна содержать "id", "name" и "status" (в указанном порядке), разделённые пробелами, не больше и не меньше;</li>
+            <li><b>id</b> должно быть целым числом в интервале от 0 до 1000 (включительно);</li>
+            <li>длина <b>name</b> не должна превышать 20 или быть меньше 2, текст может быть любым, пробелы не допускаются;</li>
+            <li><b>status</b> должен соответствовать одному варианту из списка ["active", "idle", "shutdown"].</li>
+        </ul>
+</p>
+
+<p align="justify">
+    В случае, если тип и значения данных успешно проходят валидацию, атрибуты класса <b>id</b>, <b>name</b> и <b>status</b> должны иметь соответствующие значения.
+    Значение атрибута <b>error</b> должно быть "passed data is valid".
+</p>
+
+<div class="for_info_only">
+    <p>
+        <strong>Пример создания экземпляра класса с валидными данными:</strong>
+    </p>
+
+    <pre class="brush: python">
+        log = LogLine("123 search active")
+        log.get("error") == "passed data is valid"
+        log.get("id") == 123
+        log.get("name") == "search"
+        log.get("status") == "active"
+    </pre>
+</div>
+
+<p align="justify">
+    В случае, если тип и значение данных валидацию не проходят, атрибуты класса <b>id</b>, <b>name</b> и <b>status</b> должны иметь значения None.
+    Для атрибута <b>error</b> предусмотрены следующие значения:
+    <br>
+        <ul>
+            <li>на вход подается не строка - <b>"wrong input type"</b>;</li>
+            <li>в переданной строке больше или меньше, чем 3 элемента, разделённых пробелами - <b>"wrong input value"</b>;</li>
+            <li>первый элемент переданной строки (id) не может быть приведён к целому числу - <b>"wrong id type"</b>;</li>
+            <li><b>id</b> меньше 0 или больше 1000 - <b>"wrong id value"</b>;</li>
+            <li>длина <b>name</b> меньше 2 или больше 20 - <b>"wrong name value"</b>;</li>
+            <li>значение <b>status</b> не в списке ["active", "idle", "shutdown"] - <b>"wrong status value"</b>;</li>
+        </ul>
+    Порядок списка значений атрибута <b>error</b> соответствует порядку, в котором должна происходить валидация данных.
+    При этом не требуется записывать все ошибки валидации - при возникновении любой ошибки валидацию можно прерывать и
+    считать переданные данные невалидными. Если при решении задачи по какой-то причине ты захочешь отследить все ошибки
+    в переданных данных, метод <i>log.get("error")</i> должен вернуть сообщение для первой найденной
+    ошибки из списка.
+</p>
+
+<div class="for_info_only">
+    <p>
+        <strong>Пример экземпляров класса, созданных с невалидными данными:</strong>
+    </p>
+
+    <pre class="brush: python">
+        log1 = LogLine("123 k passive")
+        log1.get("error") == "wrong name value"
+        log1.get("id") == None
+        log1.get("name") == None
+        log1.get("status") == None
+
+        log2 = LogLine(["1001 search active"])
+        log2.get("error") == "wrong input type"
+
+        log3 = LogLine("1001 search passive")
+        log3.get("error") == "wrong id value"
+
+        log4 = LogLine("900 search passive")
+        log4.get("error") == "wrong status value"
+
+        log5 = LogLine("900 search active something")
+        log5.get("error") == "wrong input value"
+    </pre>
+</div>
+
+<p align="justify">
+    Хотя решение задачи валидации данных не обязательно требует написания классов, в данной миссии, тем не менее,
+    предлагается использовать именно их в обучающих целях. Кроме того, можно сравнить наш валидатор с тем, как валидирует данные Рэймонд
+    в этой части <a href="https://youtu.be/UANN2Eu6ZnM?t=2157" target="_blank" title="Видео на youtube">видео</a>, в которой
+    он рассказывает про стратегию написания классов с наследованием на примере класса Validator.
+</p>
+
+<p>
+    <strong>Входные данные: </strong> произвольные.
+    <ul>
+    <li>валидный тип входных данных - строка;</li>
+    <li>данные во входной строке должны содержать по порядку 3 параметра, разделённых пробелами;</li>
+    <li>первый параметр из строки - <b>id</b>, должен быть целым числом, 0 <= id <= 1000;</li>
+    <li>второй параметр из строки - <b>name</b>, любой текст без пробелов не больше 20 символов;</li>
+    <li>третий параметр из строки - <b>status</b>, любое значение из списка ["active", "idle", "shutdown"].</li>
+    </ul>
+</p>
+
+<p>
+    <strong>Выходные данные: </strong> список атрибутов <b>id</b>, <b>name</b>, <b>status</b> и <b>error</b> созданного экземпляра класса в указанном порядке.
+</p>
+
+<div class="for_info_only">
+    <p>
+        <strong>Примеры:</strong>
+    </p>
+
+    <pre class="brush: python">
+validate(LogLine("123 k passive")) == [None, None, None, "wrong name value"]                        #example #1
+validate(LogLine("123 search active")) == [123, "search", "active", "passed data is valid"]         #example #2
+validate(LogLine("1001 search active")) == [None, None, None, "wrong id value"]                     #example #3
+    </pre>
+</div>
+
