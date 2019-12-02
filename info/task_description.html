@@ -31,11 +31,11 @@
     </p>
 
     <pre class="brush: python">
-        log = LogLine("123 search active")
-        log.get("error") == "passed data is valid"
-        log.get("id") == 123
-        log.get("name") == "search"
-        log.get("status") == "active"
+log = LogLine("123 search active")
+log.get("error") == "passed data is valid"
+log.get("id") == 123
+log.get("name") == "search"
+log.get("status") == "active"
     </pre>
 </div>
 
@@ -62,23 +62,23 @@
     </p>
 
     <pre class="brush: python">
-        log1 = LogLine("123 k passive")
-        log1.get("error") == "wrong name value"
-        log1.get("id") == None
-        log1.get("name") == None
-        log1.get("status") == None
+log1 = LogLine("123 k passive")
+log1.get("error") == "wrong name value"
+log1.get("id") == None
+log1.get("name") == None
+log1.get("status") == None
 
-        log2 = LogLine(["1001 search active"])
-        log2.get("error") == "wrong input type"
+log2 = LogLine(["1001 search active"])
+log2.get("error") == "wrong input type"
 
-        log3 = LogLine("1001 search passive")
-        log3.get("error") == "wrong id value"
+log3 = LogLine("1001 search passive")
+log3.get("error") == "wrong id value"
 
-        log4 = LogLine("900 search passive")
-        log4.get("error") == "wrong status value"
+log4 = LogLine("900 search passive")
+log4.get("error") == "wrong status value"
 
-        log5 = LogLine("900 search active something")
-        log5.get("error") == "wrong input value"
+log5 = LogLine("900 search active something")
+log5.get("error") == "wrong input value"
     </pre>
 </div>
 
