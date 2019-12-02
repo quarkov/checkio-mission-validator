@@ -23,7 +23,7 @@ TESTS = {
             "answer": [None, None, None, "wrong id value"]
         },
         {
-            "input": [LogLine(["1001 search active"]],
+            "input": [LogLine(["1001 search active"])],
             "answer": [None, None, None, "wrong input type"]
         },
         {
